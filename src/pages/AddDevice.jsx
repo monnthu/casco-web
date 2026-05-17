@@ -3,50 +3,42 @@ import { useNavigate } from 'react-router-dom'
 import API from '../api'
 
 export default function AddDevice() {
-    const [deviceId,  setDeviceId]  = useState('')
-    const [apiToken,  setApiToken]  = useState('')
-    const [error,     setError]     = useState('')
-    const [success,   setSuccess]   = useState(false)
+    const [deviceId, setDeviceId] = useState('')
+    const [error,    setError]    = useState('')
+    const [success,  setSuccess]  = useState(false)
     const navigate = useNavigate()
 
     async function handleAdd() {
-        if (!deviceId || !apiToken)
-            return setError('Completa todos los campos')
+        if (!deviceId) return setError('Ingresa el Device ID')
         try {
-            await API.post('/devices/register', { device_id: deviceId, api_token: apiToken })
+            await API.post('/devices/link', { device_id: deviceId })
             setSuccess(true)
             setTimeout(() => navigate('/'), 1500)
         } catch (err) {
-            setError(err.response?.data?.error || 'Error al registrar dispositivo')
+            setError(err.response?.data?.error || 'Device ID no encontrado')
         }
     }
 
     return (
         <div style={styles.container}>
             <div style={styles.card}>
-                <h2 style={styles.title}>Registrar dispositivo</h2>
+                <h2 style={styles.title}>Agregar dispositivo</h2>
                 <p style={styles.subtitle}>
-                    El Device ID y API Token deben coincidir con los configurados en el casco.
+                    Ingresa el Device ID que aparece en el portal de configuración del casco.
                 </p>
 
                 <input
                     style={styles.input}
-                    placeholder="Device ID (ej: helmet_001)"
+                    placeholder="Device ID (ej: CASCO-A1B2C3)"
                     value={deviceId}
-                    onChange={e => setDeviceId(e.target.value)}
-                />
-                <input
-                    style={styles.input}
-                    placeholder="API Token"
-                    value={apiToken}
-                    onChange={e => setApiToken(e.target.value)}
+                    onChange={e => setDeviceId(e.target.value.toUpperCase())}
                 />
 
                 {error   && <p style={styles.error}>{error}</p>}
-                {success && <p style={styles.success}>Dispositivo registrado. Redirigiendo...</p>}
+                {success && <p style={styles.success}>Dispositivo vinculado. Redirigiendo...</p>}
 
                 <button style={styles.button} onClick={handleAdd}>
-                    Registrar
+                    Vincular
                 </button>
                 <button style={styles.back} onClick={() => navigate('/')}>
                     Cancelar
