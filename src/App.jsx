@@ -3,6 +3,7 @@ import Login      from './pages/Login'
 import Dashboard  from './pages/Dashboard'
 import DeviceView from './pages/DeviceView'
 import Register from './pages/Register'
+import AddDevice from './pages/AddDevice'
 
 function PrivateRoute({ children }) {
     return localStorage.getItem('token') ? children : <Navigate to="/login" />
@@ -20,6 +21,10 @@ export default function App() {
             }/>
 			
 			<Route path="/register" element={<Register />} />
+			
+			<Route path="/add-device" element={
+    <PrivateRoute><AddDevice /></PrivateRoute>
+}/>
         </Routes>
     )
 }

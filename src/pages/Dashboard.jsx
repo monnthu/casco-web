@@ -20,6 +20,9 @@ export default function Dashboard() {
             <div style={styles.header}>
                 <h2 style={styles.title}>C.A.S.C.O. — Mis dispositivos</h2>
                 <button style={styles.logout} onClick={logout}>Cerrar sesión</button>
+				<button style={styles.addBtn} onClick={() => navigate('/add-device')}>
+    + Agregar dispositivo
+</button>
             </div>
 
             {devices.length === 0
@@ -49,6 +52,11 @@ const styles = {
         padding:'0.5rem 1rem', borderRadius:'8px', border:'none',
         background:'#333', color:'#fff', cursor:'pointer'
     },
+	addBtn: {
+    padding:'0.5rem 1rem', borderRadius:'8px', border:'none',
+    background:'#f5a623', color:'#000',
+    fontWeight:'bold', cursor:'pointer'
+},
     empty: { color:'#888' },
     grid:  { display:'flex', flexWrap:'wrap', gap:'1rem', marginTop:'1.5rem' },
     card: {
