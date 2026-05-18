@@ -1,36 +1,71 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { io } from 'socket.io-client'
 import API from '../api'
 import AlertBanner from '../components/AlertBanner'
 import EventList   from '../components/EventList'
 
+// ── URL del backend — nunca hardcodear localhost en producción ──
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://casco-backend.onrender.com'
+
 export default function DeviceView() {
     const { deviceId } = useParams()
     const navigate     = useNavigate()
-    const [events,  setEvents]  = useState([])
-    const [alert,   setAlert]   = useState(null)
+    const [events,    setEvents]    = useState([])
+    const [alert,     setAlert]     = useState(null)
     const [streamUrl, setStreamUrl] = useState('')
+    const [wsStatus,  setWsStatus]  = useState('conectando…')
+    const socketRef = useRef(null)
 
     useEffect(() => {
-        // Cargar eventos
-        API.get(`/events/${deviceId}`).then(res => setEvents(res.data))
+        // ── Cargar eventos históricos ──
+        API.get(`/events/${deviceId}`)
+            .then(res => setEvents(res.data))
+            .catch(err => console.error('[EVENTS] Error cargando eventos:', err))
 
-        // Socket.IO — escuchar alertas en tiempo real
-        const socket = io('http://localhost:3000')
-        socket.emit('join_device', deviceId)
+        // ── Socket.IO — apuntar al backend real, no a localhost ──
+        const socket = io(BACKEND_URL, {
+            transports: ['websocket'], // evitar polling en Render free tier
+            reconnectionAttempts: 5,
+        })
+        socketRef.current = socket
+
+        socket.on('connect', () => {
+            console.log('[WS] Conectado:', socket.id)
+            setWsStatus('conectado')
+            socket.emit('join_device', deviceId)
+        })
+
+        socket.on('connect_error', (err) => {
+            console.error('[WS] Error de conexión:', err.message)
+            setWsStatus('error')
+        })
+
+        socket.on('disconnect', () => {
+            console.log('[WS] Desconectado')
+            setWsStatus('desconectado')
+        })
+
         socket.on('fall_alert', (data) => {
+            console.log('[WS] fall_alert recibido:', data)
+            // Fetch el evento completo desde la DB para tener clip_url
+            API.get(`/events/${deviceId}`)
+                .then(res => setEvents(res.data))
+                .catch(() => {
+                    // Fallback: agregar el data del socket directamente
+                    setEvents(prev => [data, ...prev])
+                })
             setAlert(data)
-            setEvents(prev => [data, ...prev])
             setTimeout(() => setAlert(null), 8000)
         })
 
-        // Stream MJPEG directo desde la CAM
-        // El IP se configura manualmente por ahora
+        // ── Stream MJPEG ──
         const camIp = localStorage.getItem(`cam_ip_${deviceId}`) || ''
         if (camIp) setStreamUrl(`http://${camIp}/stream`)
 
-        return () => socket.disconnect()
+        return () => {
+            socket.disconnect()
+        }
     }, [deviceId])
 
     function setCamIp() {
@@ -46,6 +81,12 @@ export default function DeviceView() {
             <div style={styles.header}>
                 <button style={styles.back} onClick={() => navigate('/')}>← Volver</button>
                 <h2 style={styles.title}>{deviceId}</h2>
+                <span style={{
+                    ...styles.wsbadge,
+                    background: wsStatus === 'conectado' ? '#1a4a1a' : '#4a1a1a'
+                }}>
+                    ● {wsStatus}
+                </span>
             </div>
 
             {alert && <AlertBanner alert={alert} />}
@@ -78,11 +119,15 @@ export default function DeviceView() {
 
 const styles = {
     container: { padding:'2rem', background:'#0f1117', minHeight:'100vh' },
-    header:    { display:'flex', alignItems:'center', gap:'1rem' },
+    header:    { display:'flex', alignItems:'center', gap:'1rem', flexWrap:'wrap' },
     title:     { color:'#fff', margin:0 },
     back: {
         padding:'0.5rem 1rem', borderRadius:'8px',
         border:'none', background:'#333', color:'#fff', cursor:'pointer'
+    },
+    wsbadge: {
+        padding:'0.25rem 0.75rem', borderRadius:'20px',
+        color:'#aaa', fontSize:'0.75rem'
     },
     body: { display:'flex', gap:'2rem', marginTop:'1.5rem', flexWrap:'wrap' },
     streamBox: {
