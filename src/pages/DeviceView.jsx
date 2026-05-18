@@ -72,7 +72,7 @@ export default function DeviceView() {
         const ip = prompt('IP de la cámara (ej: 192.168.1.50):')
         if (ip) {
             localStorage.setItem(`cam_ip_${deviceId}`, ip)
-            setStreamUrl(`http://${ip}/stream`)
+            setStreamUrl(`${BACKEND_URL}/stream/${deviceId}?ip=${ip}`)
         }
     }
 

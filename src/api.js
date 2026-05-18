@@ -11,4 +11,12 @@ API.interceptors.request.use(cfg => {
     return cfg;
 });
 
+export async function deleteDevice(deviceId) {
+    const token = localStorage.getItem('token');
+    const res = await API.delete(`/devices/${deviceId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+    return res.status === 200;
+}
+
 export default API;
