@@ -16,6 +16,7 @@ export default function DeviceView() {
     const [streamUrl, setStreamUrl] = useState('')
     const [wsStatus,  setWsStatus]  = useState('conectando…')
     const socketRef = useRef(null)
+	const [frame, setFrame] = useState(null)
 
     useEffect(() => {
         // ── Cargar eventos históricos ──
@@ -35,6 +36,11 @@ export default function DeviceView() {
             setWsStatus('conectado')
             socket.emit('join_device', deviceId)
         })
+		
+		socket.on('frame', (data) => {
+			if (data.device_id === deviceId)
+				setFrame(data.image)
+		})
 
         socket.on('connect_error', (err) => {
             console.error('[WS] Error de conexión:', err.message)
@@ -93,22 +99,18 @@ export default function DeviceView() {
 
             <div style={styles.body}>
                 {/* Stream */}
-                <div style={styles.streamBox}>
-                    <div style={styles.streamHeader}>
-                        <span style={styles.label}>Stream en vivo</span>
-                        <button style={styles.ipBtn} onClick={setCamIp}>
-                            Configurar IP
-                        </button>
-                    </div>
-                    {streamUrl
-                        ? <img src={streamUrl} alt="stream"
-                               style={styles.stream}
-                               onError={() => setStreamUrl('')} />
-                        : <div style={styles.noStream}>
-                            Sin stream — configura la IP de la cámara
-                          </div>
-                    }
-                </div>
+				<div style={styles.streamBox}>
+					<div style={styles.streamHeader}>
+						<span style={styles.label}>Stream en vivo</span>
+						<span style={{ color: frame ? '#4caf50' : '#888', fontSize: '0.8rem' }}>
+							{frame ? '● En vivo' : '○ Sin señal'}
+						</span>
+					</div>
+					{frame
+						? <img src={frame} alt="stream" style={styles.stream} />
+						: <div style={styles.noStream}>Sin señal de cámara</div>
+					}
+				</div>
 
                 {/* Eventos */}
                 <EventList events={events} />
