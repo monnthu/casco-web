@@ -26,9 +26,10 @@ export default function DeviceView() {
 
         // ── Socket.IO — apuntar al backend real, no a localhost ──
         const socket = io(BACKEND_URL, {
-            transports: ['websocket'], // evitar polling en Render free tier
-            reconnectionAttempts: 5,
-        })
+			transports: ['polling', 'websocket'], // polling primero, luego upgrade
+			reconnectionAttempts: 10,
+			reconnectionDelay: 2000,
+		})
         socketRef.current = socket
 
         socket.on('connect', () => {
