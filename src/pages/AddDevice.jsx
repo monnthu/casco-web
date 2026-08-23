@@ -35,7 +35,7 @@ export default function AddDevice() {
         </button>
       </header>
       <main className="page" style={{ display: 'flex', justifyContent: 'center', paddingTop: '3rem' }}>
-        <form className="auth-card" onSubmit={handleAdd}>
+        <form className="auth-card" onSubmit={handleAdd} noValidate>
           <h2>Vincular casco</h2>
           <p className="sub">
             Ingresa el Device ID que aparece en el portal de configuración del casco.

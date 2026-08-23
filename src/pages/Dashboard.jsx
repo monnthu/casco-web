@@ -209,7 +209,7 @@ export default function Dashboard() {
           }}
         >
           <p>Ingresa el Device ID que aparece en el portal de configuración del casco.</p>
-          <form onSubmit={handleAdd}>
+          <form onSubmit={handleAdd} noValidate>
             <div className="field field-mono">
               <label htmlFor="new-device-id">Device ID</label>
               <input

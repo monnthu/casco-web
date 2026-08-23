@@ -13,6 +13,10 @@ export default function Login() {
   async function handleLogin(e) {
     e.preventDefault()
     setError('')
+    if (!username.trim() || !password) {
+      setError('Completa usuario y contraseña')
+      return
+    }
     setBusy(true)
     try {
       const res = await API.post('/auth/login', { username, password })
@@ -57,7 +61,7 @@ export default function Login() {
       </section>
 
       <section className="auth-panel">
-        <form className="auth-card" onSubmit={handleLogin}>
+        <form className="auth-card" onSubmit={handleLogin} noValidate>
           <Logo to={null} subtitle="Acceso de supervisión" />
           <h2>Iniciar sesión</h2>
           <p className="sub">Monitorea cascos vinculados y alertas de caída.</p>

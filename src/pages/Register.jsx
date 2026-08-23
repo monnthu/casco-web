@@ -15,7 +15,9 @@ export default function Register() {
   async function handleRegister(e) {
     e.preventDefault()
     setError('')
-    if (!username || !password) return setError('Completa todos los campos')
+    if (!username.trim() || !password || !confirm) {
+      return setError('Completa todos los campos')
+    }
     if (password !== confirm) return setError('Las contraseñas no coinciden')
 
     setBusy(true)
@@ -47,7 +49,7 @@ export default function Register() {
       </section>
 
       <section className="auth-panel">
-        <form className="auth-card" onSubmit={handleRegister}>
+        <form className="auth-card" onSubmit={handleRegister} noValidate>
           <Logo to={null} subtitle="Alta de supervisor" />
           <h2>Crear cuenta</h2>
           <p className="sub">Un usuario por consola de supervisión.</p>
