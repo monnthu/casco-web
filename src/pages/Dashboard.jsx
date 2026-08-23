@@ -167,7 +167,7 @@ export default function Dashboard() {
             {filtered.map(d => (
               <article key={d.device_id} className="device-card">
                 <div className="device-card-top">
-                  <span className="hat-tile"><IconHat size={18} /></span>
+                  <span className="hat-tile"><IconHat size={28} /></span>
                   <span className="status-badge">
                     <IconQuestion /> Sin datos de conexión
                   </span>

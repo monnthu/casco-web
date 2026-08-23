@@ -177,6 +177,31 @@ a { color: var(--amber); }
 .banner-error { border: 1px solid rgba(255, 45, 45, 0.5); background: rgba(255, 45, 45, 0.1); }
 .banner-ok { border: 1px solid rgba(30, 207, 122, 0.5); background: rgba(30, 207, 122, 0.1); }
 
+.casco-logo {
+  display: block;
+  flex-shrink: 0;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+.auth-hero-logo {
+  margin: 2.2rem 0 0.4rem;
+}
+.auth-hero-logo .casco-logo {
+  width: 108px;
+  height: 108px;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.35));
+}
+.auth-brand .brand-mark .casco-logo {
+  width: 48px;
+  height: 48px;
+}
+.hat-tile .casco-logo,
+.stat-icon .casco-logo {
+  width: 28px;
+  height: 28px;
+}
+
 .brand-mark {
   display: inline-flex;
   align-items: center;
@@ -508,6 +533,11 @@ a { color: var(--amber); }
   margin: 0.8rem 0 0.4rem;
 }
 .empty svg { width: 56px; height: 56px; color: var(--amber); }
+.empty .casco-logo {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+}
 
 .mobile-cta {
   display: none;
@@ -885,13 +915,14 @@ a { color: var(--amber); }
     padding: 1.5rem 1.2rem 1.3rem;
     min-height: unset;
   }
-  .auth-steps, .auth-kicker, .auth-disclaimer, .auth-brand h1, .auth-expand { display: none; }
+  .auth-steps, .auth-kicker, .auth-disclaimer, .auth-brand h1, .auth-expand, .auth-hero-logo { display: none; }
   .auth-brand .brand-mark { display: flex; }
   .how-toggle { display: flex; }
   .auth-brand.is-open .auth-steps,
   .auth-brand.is-open .auth-disclaimer { display: flex; }
   .auth-brand.is-open .auth-kicker,
   .auth-brand.is-open .auth-expand,
+  .auth-brand.is-open .auth-hero-logo,
   .auth-brand.is-open h1 { display: block; }
   .auth-brand.is-open h1 { font-size: 1.8rem; margin-top: 0.8rem; }
   .console-grid { grid-template-columns: 1fr; }

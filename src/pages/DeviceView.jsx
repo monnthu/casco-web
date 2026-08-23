@@ -4,6 +4,7 @@ import { io } from 'socket.io-client'
 import API from '../api'
 import AlertBanner from '../components/AlertBanner'
 import EventList from '../components/EventList'
+import CascoLogo from '../components/CascoLogo'
 import { clockHms } from '../format'
 import {
   IconBack,
@@ -11,7 +12,6 @@ import {
   IconCamOff,
   IconCheck,
   IconFlask,
-  IconHat,
   IconHistory,
   IconMute,
   IconVideo,
@@ -121,7 +121,7 @@ export default function DeviceView() {
             <IconBack /> <span className="hide-sm">Flota</span>
           </button>
           <span className="rule" />
-          <span style={{ color: 'var(--amber)', display: 'inline-flex' }}><IconHat /></span>
+          <CascoLogo size={28} />
           <span className="device-id-display">{deviceId}</span>
         </div>
         <div className="topbar-right">

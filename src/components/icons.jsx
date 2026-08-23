@@ -1,34 +1,15 @@
+import CascoLogo from './CascoLogo'
+
 export function IconHat({ size = 18 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M3 17.5h18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M5 16.4c0-5.2 3.3-9.2 7-9.2s7 4 7 9.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M9 8.6c.9-.7 2-.1 3-1.1s2.1.4 3 1.1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      <rect x="10.6" y="5.2" width="2.8" height="2.4" rx="0.4" fill="currentColor" />
-    </svg>
-  )
+  return <CascoLogo size={size} />
 }
 
 export function HelmetMark({ size = 36 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 36 36" fill="none" aria-hidden="true">
-      <rect width="36" height="36" rx="7" fill="rgba(245,179,1,0.1)" stroke="rgba(245,179,1,0.4)" strokeWidth="1.25" />
-      <path d="M6 25.5h24" stroke="#f5b301" strokeWidth="2.1" strokeLinecap="round" />
-      <path d="M8.2 24.2c0-6.8 4.4-12 9.8-12s9.8 5.2 9.8 12" stroke="#f5b301" strokeWidth="2.1" strokeLinecap="round" />
-      <path d="M13 13.4c1.5-1.15 3.2-1.8 5-1.8s3.5.65 5 1.8" stroke="#f5b301" strokeWidth="1.5" strokeLinecap="round" />
-      <rect x="16.1" y="9.2" width="3.8" height="3.3" rx="0.6" fill="#f5b301" />
-    </svg>
-  )
+  return <CascoLogo size={size} />
 }
 
 export function HelmetEmpty() {
-  return (
-    <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-      <path d="M8 46h48" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
-      <path d="M12 43.5c0-13 9-23.5 20-23.5s20 10.5 20 23.5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
-      <rect x="29" y="14" width="6" height="6" rx="1" fill="currentColor" />
-    </svg>
-  )
+  return <CascoLogo size={80} className="casco-logo--empty" />
 }
 
 export function IconSearch({ size = 14 }) {

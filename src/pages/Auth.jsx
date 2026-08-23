@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import API from '../api'
 import Logo from '../components/Logo'
+import CascoLogo from '../components/CascoLogo'
 import { IconEye, IconEyeOff, IconFlask } from '../components/icons'
 
 export default function Auth({ initialMode = 'login' }) {
@@ -76,6 +77,9 @@ export default function Auth({ initialMode = 'login' }) {
             <span aria-hidden="true">{howOpen ? '▴' : '▾'}</span>
           </button>
           <p className="auth-kicker">Cómo funciona</p>
+          <div className="auth-hero-logo" aria-hidden="true">
+            <CascoLogo size={108} />
+          </div>
           <h1>C.A.S.C.O.</h1>
           <p className="auth-expand">Casco Autónomo con Sensores de Control y Observación</p>
           <ol className="auth-steps">
