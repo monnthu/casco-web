@@ -18,3 +18,7 @@ export function formatLinkedDate(dateStr) {
     year: 'numeric',
   })
 }
+
+export function clockHms(date = new Date()) {
+  return date.toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+}

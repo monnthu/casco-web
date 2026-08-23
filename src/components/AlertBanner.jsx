@@ -6,13 +6,17 @@ export default function AlertBanner({ alert, onAcknowledge }) {
 
   return (
     <div className="alert-critical" role="alert" aria-live="assertive">
-      <div>
-        <h2>Caída detectada</h2>
-        <p>
-          {alert?.device_id || 'Casco'} · {timeLabel}
-        </p>
+      <div className="alert-critical-copy">
+        <span className="warn-orb">!</span>
+        <div>
+          <h2>Caída detectada — sin confirmar</h2>
+          <p>
+            <span className="device-id-display">{alert?.device_id || 'Casco'}</span>
+            {timeLabel ? ` · Hoy, ${timeLabel}` : ''} · Requiere confirmación del supervisor
+          </p>
+        </div>
       </div>
-      <button type="button" className="btn btn-primary" onClick={onAcknowledge}>
+      <button type="button" className="btn btn-white" onClick={onAcknowledge}>
         Reconocer alerta
       </button>
     </div>

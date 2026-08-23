@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import API from '../api'
 import Logo from '../components/Logo'
+import { IconBack, IconInfo, IconLink } from '../components/icons'
 
 export default function AddDevice() {
   const [deviceId, setDeviceId] = useState('')
@@ -12,7 +13,7 @@ export default function AddDevice() {
 
   async function handleAdd(e) {
     e.preventDefault()
-    if (!deviceId) return setError('Ingresa el Device ID')
+    if (!deviceId) return setError('Ingresá el ID del casco.')
     setBusy(true)
     setError('')
     try {
@@ -20,45 +21,61 @@ export default function AddDevice() {
       setSuccess(true)
       setTimeout(() => navigate('/'), 1500)
     } catch (err) {
-      setError(err.response?.data?.error || 'Device ID no encontrado')
+      setError(err.response?.data?.error || 'Ese ID ya está vinculado a otra cuenta o no existe.')
     } finally {
       setBusy(false)
     }
   }
 
   return (
-    <div className="shell">
+    <div className="shell grid-tech">
       <header className="topbar">
-        <Logo />
-        <button type="button" className="btn btn-ghost btn-sm" onClick={() => navigate('/')}>
-          ← Flota
-        </button>
+        <div className="topbar-left">
+          <button type="button" className="btn btn-ghost btn-sm" onClick={() => navigate('/')}>
+            <IconBack /> <span className="hide-sm">Volver a la flota</span>
+          </button>
+          <span className="rule hide-sm" />
+          <Logo />
+        </div>
       </header>
-      <main className="page" style={{ display: 'flex', justifyContent: 'center', paddingTop: '3rem' }}>
-        <form className="auth-card" onSubmit={handleAdd} noValidate>
-          <h2>Vincular casco</h2>
-          <p className="sub">
-            Ingresa el Device ID que aparece en el portal de configuración del casco.
-          </p>
-          <div className="field field-mono">
-            <label htmlFor="add-device-id">Device ID</label>
-            <input
-              id="add-device-id"
-              placeholder="CASCO-A1B2C3"
-              value={deviceId}
-              onChange={e => setDeviceId(e.target.value.toUpperCase())}
-              autoComplete="off"
-            />
+      <main className="page add-wrap">
+        <div className="add-card">
+          <div className="add-title">
+            <span className="hat-tile"><IconLink /></span>
+            <div>
+              <h1>Vincular casco</h1>
+              <p>Sumá un nuevo casco C.A.S.C.O. a tu flota</p>
+            </div>
           </div>
-          {error && <p className="form-error" role="alert">{error}</p>}
-          {success && <p className="form-ok">Dispositivo vinculado. Redirigiendo…</p>}
-          <button type="submit" className="btn btn-primary btn-block" disabled={busy || success}>
-            {busy ? 'Vinculando…' : 'Vincular'}
-          </button>
-          <button type="button" className="btn btn-ghost btn-block" onClick={() => navigate('/')}>
-            Cancelar
-          </button>
-        </form>
+          <form className="add-box" onSubmit={handleAdd} noValidate>
+            <p className="sub" style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>
+              Ingresá el identificador impreso en la etiqueta del casco. Lo vas a encontrar en la parte interna, junto al módulo ESP32.
+            </p>
+            {error && <div className="banner-error" role="alert">{error}</div>}
+            {success && <div className="banner-ok">Casco vinculado correctamente. Redirigiendo a la flota…</div>}
+            <div className="field field-mono">
+              <label htmlFor="add-device-id">ID del casco</label>
+              <input
+                id="add-device-id"
+                placeholder="CASCO-XXXX"
+                value={deviceId}
+                onChange={e => setDeviceId(e.target.value.toUpperCase())}
+                autoComplete="off"
+              />
+              <p className="field-hint">Se guarda siempre en mayúsculas.</p>
+            </div>
+            <div className="modal-actions">
+              <button type="button" className="btn btn-ghost" onClick={() => navigate('/')}>Cancelar</button>
+              <button type="submit" className="btn btn-primary" disabled={busy || success}>
+                {busy ? 'Vinculando…' : 'Vincular'}
+              </button>
+            </div>
+          </form>
+          <div className="footnote" style={{ marginTop: '1.1rem' }}>
+            <IconInfo />
+            <p>El casco debe estar encendido y conectado al Wi-Fi del sitio para empezar a transmitir video y alertas apenas se vincule.</p>
+          </div>
+        </div>
       </main>
     </div>
   )

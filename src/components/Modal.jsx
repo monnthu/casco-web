@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { IconClose } from './icons'
 
 export default function Modal({ title, children, onClose }) {
   const cardRef = useRef(null)
@@ -49,7 +50,13 @@ export default function Modal({ title, children, onClose }) {
         aria-modal="true"
         aria-labelledby="modal-title"
       >
-        <h2 id="modal-title">{title}</h2>
+        <div className="sheet-handle" />
+        <div className="modal-head">
+          <h2 id="modal-title">{title}</h2>
+          <button type="button" className="icon-close" onClick={onClose} aria-label="Cerrar">
+            <IconClose />
+          </button>
+        </div>
         {children}
       </div>
     </div>

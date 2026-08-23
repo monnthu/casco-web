@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { IconInfo, IconPause, IconPlay } from './icons'
 
 function extractJpegFrames(bytes) {
   const frames = []
@@ -85,19 +86,27 @@ export default function MjpegPlayer({ url }) {
   }
 
   return (
-    <div className="player">
-      <img
-        src={frames[current]}
-        alt={`Fotograma ${current + 1} de ${frames.length} del clip de evidencia`}
-      />
+    <div>
+      <div className="player">
+        <img
+          src={frames[current]}
+          alt={`Fotograma ${current + 1} de ${frames.length} del clip de evidencia`}
+        />
+        <span className="frame-chip">frame {current + 1} / {frames.length}</span>
+      </div>
+      <p className="event-note">
+        <IconInfo size={12} />
+        Clip de evidencia no estándar: 7 s antes del impacto + 7 s después, reproducido cuadro por cuadro (MJPEG), no un video MP4.
+      </p>
       <div className="player-controls">
         <button
           type="button"
-          className="btn btn-ghost btn-sm"
+          className="play-btn"
           onClick={() => setPlaying(p => !p)}
           aria-pressed={playing}
+          aria-label={playing ? 'Pausar' : 'Reproducir'}
         >
-          {playing ? 'Pausa' : 'Reproducir'}
+          {playing ? <IconPause /> : <IconPlay />}
         </button>
         <input
           type="range"
@@ -110,7 +119,7 @@ export default function MjpegPlayer({ url }) {
           }}
           aria-label="Posición del clip"
         />
-        <span className="player-count">{current + 1} / {frames.length}</span>
+        <span className="player-fps">~10 FPS</span>
       </div>
     </div>
   )
