@@ -16,6 +16,10 @@
 \graphicspath{{figures/}}
 \def\UrlBreaks{\do\/\do-\do_\do.\do?\do&\do=}
 
+% IEEE conference copyright notice (required for camera-ready).
+\IEEEoverridecommandlockouts
+\IEEEpubid{\makebox[\columnwidth]{979-8-3195-4761-3/26/\$31.00~\copyright~2026 IEEE \hfill}
+\hspace{\columnsep}\makebox[\columnwidth]{ }}
 
 \title{C.A.S.C.O.: A Smart Helmet Prototype for Fall Detection, Event Capture, and Real-Time Alerts}
 
@@ -103,6 +107,7 @@ C.A.S.C.O. addresses this need through a smart safety helmet that detects a prob
 The main contribution of this work is an end-to-end smart-helmet prototype that combines local threshold-based fall detection, ESP-NOW-based inter-device triggering, PSRAM-based pre-event video buffering, cloud event storage, and real-time web/mobile supervisor alerts. Unlike alert-only fall-detection systems, the proposed prototype preserves visual context before and after the incident while avoiding direct inbound network access to the helmet. This paper reports the implementation and integration status honestly as a prototype, not as certified safety equipment.
 
 \section{State of the Art}
+\IEEEpubidadjcol
 Wearable fall-detection research commonly relies on inertial sensors such as accelerometers and gyroscopes. Ramachandran and Karuppiah survey wearable fall-detection systems and note the role of both threshold-based and machine-learning approaches in distinguishing falls from normal activity \cite{ramachandran2020}. Wu \textit{et al.} report a waist-worn quaternion detector at 97.1\% sensitivity and 98.3\% specificity against a 91.6\%/88.7\% acceleration-threshold baseline \cite{wu2015}. Table~\ref{tab:lit} places those figures beside CareFall's SMV-threshold versus random-forest results on the Erciyes wrist dataset \cite{ruizgarcia2023} and Qian \textit{et al.}'s 20-volunteer IoT wearable \cite{qian2022}. The studies are not interchangeable with C.A.S.C.O.; on-helmet learning is not claimed here.
 
 \begin{table*}[!t]
