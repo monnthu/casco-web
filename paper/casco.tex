@@ -16,18 +16,16 @@
 \def\UrlBreaks{\do\/\do-\do_\do.\do?\do&\do=}
 
 % IEEE conference copyright notice (required for camera-ready).
-\IEEEpubid{\makebox[\columnwidth]{979-8-3195-4761-3/26/\$31.00~\copyright~2026 IEEE \hfill}
+\IEEEpubid{\makebox[\columnwidth]{979-8-3195-4761-3/26/\$31.00 \copyright2026 IEEE \hfill}
 \hspace{\columnsep}\makebox[\columnwidth]{ }}
 
 \title{C.A.S.C.O.: A Smart Helmet Prototype for Fall Detection, Event Capture, and Real-Time Alerts}
 
-% Four separate IEEE author cards in a centered 2x2.
-% \IEEEauthorblockN/\A center the name AND affiliation/email in each card.
-% \cascolinebreakand starts a new centered row (plain \and wrapping
-% shifts row 2 off-center; reviewers asked that the block stay centered).
+% Centered 2x2. Name and affiliation lines are centered in each card.
+% A centered row-break is used instead of IEEEtran's default 4-author wrap.
 \makeatletter
 \newcommand{\cascolinebreakand}{%
-\end{@IEEEauthorhalign}\hfill\mbox{}\par\vspace{6pt}%
+\end{@IEEEauthorhalign}\hfill\mbox{}\par\vspace{0pt}%
 \mbox{}\hfill\begin{@IEEEauthorhalign}}
 \makeatother
 \newcommand{\cascoaff}{%
@@ -134,7 +132,7 @@ A key engineering correction was moving expensive operations out of the ESP-NOW 
 The fall-detection algorithm is a three-stage finite-state machine, shown in Fig.~\ref{fig:fsm}. The machine transitions from IDLE to FREEFALL\_DETECTED when acceleration magnitude drops below 0.5 g. If an impact greater than 2.5 g occurs within the configured time window and the gyroscope magnitude changes sharply, the state advances to IMPACT\_DETECTED. The algorithm then requires approximately 1.5 s of post-impact stillness before confirming the fall and sending the alert.
 
 \begin{figure}[!t]
-\centerline{\includegraphics[width=\columnwidth]{fig2.png}}
+\centerline{\includegraphics[width=0.96\columnwidth]{fig2.png}}
 \caption{Three-stage fall-detection finite-state machine.}
 \label{fig:fsm}
 \end{figure}
