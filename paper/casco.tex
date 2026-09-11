@@ -21,31 +21,36 @@
 
 \title{C.A.S.C.O.: A Smart Helmet Prototype for Fall Detection, Event Capture, and Real-Time Alerts}
 
-% Four separate author cards. Wrapped in \parbox so IEEEtran's author
-% \halign cannot steal & / \\ ; inner minipage+\hfill restores the
-% original 2x2 spacing (wide column gap + extra row gap).
-\newcommand{\cascoauthor}[2]{%
-\begin{minipage}[t]{0.42\textwidth}
-\centering
-#1\\
+% Four separate IEEE author cards in a centered 2x2.
+% \IEEEauthorblockN/\A center the name AND affiliation/email in each card.
+% \cascolinebreakand starts a new centered row (plain \and wrapping
+% shifts row 2 off-center; reviewers asked that the block stay centered).
+\makeatletter
+\newcommand{\cascolinebreakand}{%
+\end{@IEEEauthorhalign}\hfill\mbox{}\par\vspace{0.85cm}%
+\mbox{}\hfill\begin{@IEEEauthorhalign}}
+\makeatother
+\newcommand{\cascoaff}{%
 \textit{Faculty of Engineering}\\
 \textit{Universidad Evangélica de El Salvador}\\
-San Salvador, El Salvador\\
-#2
-\end{minipage}}
+San Salvador, El Salvador}
 
 \author{%
-\parbox{\textwidth}{%
-\cascoauthor{Josué López, Student Member, IEEE}{josuerlb1110@gmail.com}%
-\hfill
-\cascoauthor{Jorge Larios, Student Member, IEEE}{romerojorge0504@gmail.com}
-
-\vspace{0.85cm}
-
-\cascoauthor{Francisco Reyes, Student Member, IEEE}{Reeyes888@gmail.com}%
-\hfill
-\cascoauthor{Job N. Acosta, Member, IEEE}{jobacosta@ieee.org}%
-}%
+\IEEEauthorblockN{Josué López, Student Member, IEEE}
+\IEEEauthorblockA{\cascoaff\\
+josuerlb1110@gmail.com}
+\and
+\IEEEauthorblockN{Jorge Larios, Student Member, IEEE}
+\IEEEauthorblockA{\cascoaff\\
+romerojorge0504@gmail.com}
+\cascolinebreakand
+\IEEEauthorblockN{Francisco Reyes, Student Member, IEEE}
+\IEEEauthorblockA{\cascoaff\\
+Reeyes888@gmail.com}
+\and
+\IEEEauthorblockN{Job N. Acosta, Member, IEEE}
+\IEEEauthorblockA{\cascoaff\\
+jobacosta@ieee.org}%
 }
 
 \begin{document}
