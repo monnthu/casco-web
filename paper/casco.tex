@@ -21,26 +21,31 @@
 
 \title{C.A.S.C.O.: A Smart Helmet Prototype for Fall Detection, Event Capture, and Real-Time Alerts}
 
-% Four separate author cards in a 2x2 tabular so the block is centered
-% under the title (IEEEtran \and wrapping otherwise shifts the grid).
+% Four separate author cards. Wrapped in \parbox so IEEEtran's author
+% \halign cannot steal & / \\ ; inner minipage+\hfill restores the
+% original 2x2 spacing (wide column gap + extra row gap).
 \newcommand{\cascoauthor}[2]{%
-\parbox[t]{0.40\textwidth}{\centering
-#1\\[0.35em]
+\begin{minipage}[t]{0.42\textwidth}
+\centering
+#1\\
 \textit{Faculty of Engineering}\\
 \textit{Universidad Evangélica de El Salvador}\\
 San Salvador, El Salvador\\
-#2}}
+#2
+\end{minipage}}
 
 \author{%
-\begin{tabular}{@{}c@{\hspace{1.5em}}c@{}}
-\cascoauthor{Josué López, Student Member, IEEE}{josuerlb1110@gmail.com}
-&
+\parbox{\textwidth}{%
+\cascoauthor{Josué López, Student Member, IEEE}{josuerlb1110@gmail.com}%
+\hfill
 \cascoauthor{Jorge Larios, Student Member, IEEE}{romerojorge0504@gmail.com}
-\\[0.45cm]
-\cascoauthor{Francisco Reyes, Student Member, IEEE}{Reeyes888@gmail.com}
-&
-\cascoauthor{Job N. Acosta, Member, IEEE}{jobacosta@ieee.org}
-\end{tabular}%
+
+\vspace{0.85cm}
+
+\cascoauthor{Francisco Reyes, Student Member, IEEE}{Reeyes888@gmail.com}%
+\hfill
+\cascoauthor{Job N. Acosta, Member, IEEE}{jobacosta@ieee.org}%
+}%
 }
 
 \begin{document}
